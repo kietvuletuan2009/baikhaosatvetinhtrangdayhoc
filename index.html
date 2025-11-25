@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Sinh Nhật Hân! 🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .gift-box {
+            background: white;
+            border: 3px solid #ff6b6b;
+            border-radius: 15px;
+            padding: 40px 60px;
+            font-size: 1.5em;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .surprise-container {
+            display: none;
+            animation: fadeInScale 1s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            color: white;
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            animation: bounceIn 1s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .message-box {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px auto;
+            max-width: 700px;
+            color: #333;
+            font-size: 1.4em;
+            line-height: 1.8;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .music-section {
+            margin-top: 40px;
+            animation: fadeIn 2s ease-in 1s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .music-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+
+        .music-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .music-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .music-hint {
+            color: white;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            z-index: 100;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .firework {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            z-index: 99;
+        }
+
+        @keyframes explode {
+            to {
+                transform: translate(var(--x), var(--y));
+                opacity: 0;
+            }
+        }
+
+        .emoji-rain {
+            position: fixed;
+            font-size: 2em;
+            z-index: 98;
+            animation: emojifall 4s linear;
+        }
+
+        @keyframes emojifall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Ô bình thường ban đầu -->
+        <div id="giftBox" class="gift-box" onclick="openGift()">
+            🎁 Nhấn vào đây nhé! 🎁
+        </div>
+
+        <!-- Phần bất ngờ (ẩn ban đầu) -->
+        <div id="surpriseContent" class="surprise-container">
+            <h1>🎉 CHÚC MỪNG SINH NHẬT HÂN! 🎉</h1>
+            
+            <div class="message-box">
+                <p style="margin-bottom: 20px;">💝 Chúc Hân tuổi mới zui zẻ, dễ thương với nhiều niềm zuii hơn trong cuộc sống nhaa.</p>
+                <p style="margin-bottom: 20px;">🌟 Cảm ơn Hân vì đã là một người bạn tốt của Kiệt trong hơn 1 năm quaa nhen, mong Hân thông cảm cho Kiệt vì Kiệt hongg biết quà gì để mua tặng Hân hết.</p>
+                <p>😄 Nhưng mà thoiii hong sao vì Kiệt là món quà lớn nhất của Hân rồii 😎</p>
+            </div>
+
+            <div class="music-section">
+                <div class="music-hint">👇 Nhấn vào đây để bất ngờ hơn nữa! 👇</div>
+                <button class="music-btn" onclick="playMusic()">
+                    🎵 Mở Nhạc Nào! 🎵
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let fireworksInterval;
+        let musicPlaying = false;
+
+        // Mở quà và hiển thị bất ngờ
+        function openGift() {
+            const giftBox = document.getElementById('giftBox');
+            const surpriseContent = document.getElementById('surpriseContent');
+            
+            // Ẩn ô ban đầu
+            giftBox.style.display = 'none';
+            
+            // Hiển thị nội dung bất ngờ
+            surpriseContent.style.display = 'block';
+            
+            // Bắn pháo hoa ngay lập tức
+            startFireworks();
+            createEmojiRain();
+        }
+
+        // Tạo pháo hoa confetti
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#ff9ff3', '#54a0ff', '#feca57', '#ff6348'];
+            
+            for(let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-20px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animation = `confettiFall ${2 + Math.random() * 2}s linear`;
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 30);
+            }
+        }
+
+        // Tạo hiệu ứng pháo hoa bắn tung tóe
+        function createFirework(x, y) {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#ff9ff3', '#54a0ff'];
+            const particles = 30;
+            
+            for(let i = 0; i < particles; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                firework.style.left = x + 'px';
+                firework.style.top = y + 'px';
+                firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                const angle = (Math.PI * 2 * i) / particles;
+                const velocity = 100 + Math.random() * 100;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+                
+                firework.style.setProperty('--x', tx + 'px');
+                firework.style.setProperty('--y', ty + 'px');
+                firework.style.animation = 'explode 1s ease-out forwards';
+                
+                document.body.appendChild(firework);
+                setTimeout(() => firework.remove(), 1000);
+            }
+        }
+
+        // Bắt đầu pháo hoa liên tục
+        function startFireworks() {
+            createConfetti();
+            
+            // Tạo pháo hoa ở vị trí ngẫu nhiên
+            fireworksInterval = setInterval(() => {
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight * 0.7;
+                createFirework(x, y);
+            }, 800);
+            
+            // Dừng sau 10 giây
+            setTimeout(() => {
+                clearInterval(fireworksInterval);
+            }, 10000);
+        }
+
+        // Tạo mưa emoji
+        function createEmojiRain() {
+            const emojis = ['🎂', '🎈', '🎉', '🎁', '💝', '🌟', '✨', '💖', '🎊'];
+            
+            for(let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'emoji-rain';
+                    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.left = Math.random() * 100 + '%';
+                    emoji.style.top = '-50px';
+                    document.body.appendChild(emoji);
+                    
+                    setTimeout(() => emoji.remove(), 4000);
+                }, i * 200);
+            }
+        }
+
+        // Phát nhạc GO! của Cortis
+        function playMusic() {
+            if(musicPlaying) return;
+            
+            musicPlaying = true;
+            
+            // Tạo pháo hoa lại khi bấm nút nhạc
+            startFireworks();
+            createEmojiRain();
+            createConfetti();
+            
+            // Phát nhạc từ file MP3
+            const audio = new Audio('GO! (2).mp3');
+            audio.volume = 0.7;
+            audio.play().catch(err => {
+                alert('⚠️ Không thể phát nhạc! Hãy đảm bảo file "GO(2)!.mp3" nằm cùng thư mục với file HTML nhé!');
+                console.error('Lỗi phát nhạc:', err);
+            });
+            
+            // Đổi text nút khi đang phát
+            const btn = event.target;
+            btn.innerHTML = '🎵 Đang Phát Nhạc... 🎵';
+            btn.style.background = 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)';
+        }
+    </script>
+</body>
+</html>
